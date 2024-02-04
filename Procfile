@@ -1,1 +1,1 @@
-web: uvicorn bolton_api:app --host=0.0.0.0 --port=${PORT}
+web: uvicorn financial_analyst_api:app --host=0.0.0.0 --port=${PORT}
