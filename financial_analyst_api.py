@@ -155,7 +155,7 @@ def calculate_kpis(financial_data: FinancialDetails, year: str):
             'Cash Ratio': current_assets / short_term_liabilities if short_term_liabilities else 0,
             'Return on Sales': net_income / sales_revenue if sales_revenue else 0,
             'Return on Assets': net_income / total_assets if total_assets else 0,
-            'Return on Equity': net_income / equity if equity else 0,
+            'Return on Equity': net_income / equity if equity >0 else 0,
             'Frequency of Capital Turnover': sales_revenue / total_assets if total_assets else 0,
             'Return on Investment': net_income / (equity + total_liabilities) if (equity + total_liabilities) else 0,
         }
