@@ -121,13 +121,14 @@ def calculate_kpis(financial_data: FinancialDetails, year: str):
     try:
         # Retrieve values from financial_data, set defaults to 0 if not present
         equity = financial_data.get('equity', 0)
-        total_assets = financial_data.get('total_assets', 0)
-        non_current_assets = financial_data.get('other_non_current_assets', 0)
         inventories = financial_data.get('inventories', 0)
+        non_current_assets = financial_data.get('intangible_assets', 0) + financial_data.get('property_plant_and_equipment', 0) + financial_data.get('other_non_current_assets', 0)
         current_assets = financial_data.get('cash_and_cash_equivalents', 0) + financial_data.get('trade_receivables', 0) + financial_data.get('other_current_assets', 0)
+        total_assets = non_current_assets + current_assets + financial_data.get('other_assets', 0) + financial_data.get('active_accruals_deferrals', 0)
         short_term_liabilities = financial_data.get('short_term_and_current_liabilities', 0)
         long_term_liabilities = financial_data.get('long_term_debt_and_non_current_liabilities', 0)
-        total_liabilities = short_term_liabilities + long_term_liabilities
+        total_liabilities = short_term_liabilities + long_term_liabilities + financial_data.get('provisions', 0) + financial_data.get('passive_accruals_deferrals', 0)
+        balance_sum = total_liabilities + equity
         sales_revenue = financial_data.get('sales_revenue', 0)
         ebitda = sales_revenue - financial_data.get('cogs', 0) 
         ebit = ebitda - financial_data.get('depreciation', 0)
@@ -156,7 +157,7 @@ def calculate_kpis(financial_data: FinancialDetails, year: str):
             'Return on Assets': net_income / total_assets if total_assets else 0,
             'Return on Equity': net_income / equity if equity else 0,
             'Frequency of Capital Turnover': sales_revenue / total_assets if total_assets else 0,
-            'Return on Investment': net_income / (equity + long_term_liabilities) if (equity + long_term_liabilities) else 0,
+            'Return on Investment': net_income / (equity + total_liabilities) if (equity + total_liabilities) else 0,
         }
         
         return kpi_data
