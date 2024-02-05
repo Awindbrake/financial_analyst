@@ -9,7 +9,20 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, ValidationError
 from typing import Dict, TypedDict, Optional
 
-app = FastAPI()
+
+
+app = FastAPI(
+        title = "Financial Analysis API",
+        description = "Performs financial analysis and calculates various KPIs based on submitted financial data.",
+        version = "1.0.0",
+        servers = [
+            {
+
+            "url": "https://financialanalyst-d8993699e73a.herokuapp.com",
+            "description": "financial report analyst"
+            }
+        ]
+            )
 
 @app.get("/")
 def read_root():
@@ -25,39 +38,7 @@ def read_root():
     </html>
     """
 
-# financial_data: {
-#              "2021": {
-#                "intangible_assets": 1000.0,
-#                "property_plant_and_equipment": 5000.0,
-#                "other_non_current_assets": 2000.0,
-#                "inventories": 3000.0,
-#                "trade_receivables": 1500.0,
-#                "cash_and_cash_equivalents": 2500.0,
-#                "other_current_assets": 1000.0,
-#                "other_assets": 500.0,
-#                "active_accruals_deferrals": 0,
-#                "equity": 15000.0,
-#                "short_term_and_current_liabilities": 5000.0,
-#                "long_term_debt_and_non_current_liabilities": 8000.0,
-#                "provisions": 200.0,
-#                "passive_accruals_deferrals": 0,
-#                "sales_revenue": 10000.0,
-#                "cogs": 7000.0,
-#                "other_operational_expense": 1000.0,
-#                "depreciation": 500.0,
-#                "interest_expenses": 300.0,
-#                "other_expenses": 400.0,
-#                "total_assets": 20000.0,
-#                "total_liabilities": 13000.0,
-#                "long_term_liabilities": 8000.0,
-#                "other_operational_income": 1500.0,
-#                "other_income": 250.0,
-#                "interest_income": 100.0,
-#                "ebit": 2300.0,
-#                "net_income": 2100.0,
-#                "op_cash_flow": 2200.0
-#              }
-#            }
+
 
 class FinancialDetails(TypedDict, total=False):
     intangible_assets: Optional[float]
