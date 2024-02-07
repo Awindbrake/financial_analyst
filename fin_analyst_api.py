@@ -59,7 +59,7 @@ def calculate_kpi(intangible_assets: float, property_plant_and_equipment: float,
     equity_ratio = equity / total_assets if total_assets else 0
     debt_ratio = total_liabilities / total_assets if total_assets else 0
     equity_to_fixed_assets_ratio_I = equity / non_current_assets if non_current_assets else 0
-    equity_to_fixed_assets_ratio_II = equity / (non_current_assets + long_term_liabilities) if non_current_assets else 0
+    equity_to_fixed_assets_ratio_II = equity / (non_current_assets + long_term_liabilities) if (non_current_assets + long_term_liabilities) else 0
     effective_debt = (short_term_liabilities + long_term_liabilities) - current_assets
     static_gearing = total_liabilities / equity if equity else 0
     dynamic_gearing_in_years = (short_term_liabilities + long_term_liabilities - current_assets) / op_cash_flow if op_cash_flow else 0
