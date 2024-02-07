@@ -119,12 +119,12 @@ def calculate_kpis(financial_data: Dict[str, FinancialDetails]) -> Dict[str, Dic
             net_income = ebit - (details.other_operational_expense or 0) + (details.other_operational_income or 0) - (details.interest_expenses or 0) + (details.interest_income or 0) - (details.other_expenses or 0) + (details.other_income or 0)
             op_cash_flow = details.op_cash_flow or 0
 
-            # Calculated KPIs based on the provided structure
-            kpi_data[year] = {
-                'EBITDA': ebitda,
-                'EBIT': ebit,
-                'Net Income': net_income,
-                'Equity Ratio': equity / total_assets if total_assets else 0,
+            # # Calculated KPIs based on the provided structure
+            # kpi_data[year] = {
+            #     'EBITDA': ebitda,
+            #     'EBIT': ebit,
+            #     'Net Income': net_income,
+            #     'Equity Ratio': equity / total_assets if total_assets else 0,
                 # 'Debt Ratio': total_liabilities / total_assets if total_assets else 0,
                 # 'Equity-to-Fixed Assets Ratio I': equity / non_current_assets if non_current_assets else 0,
                 # 'Equity-to-Fixed Assets Ratio II': equity / (non_current_assets + long_term_liabilities) if non_current_assets else 0,
@@ -142,9 +142,9 @@ def calculate_kpis(financial_data: Dict[str, FinancialDetails]) -> Dict[str, Dic
                 # 'Return on Equity': net_income / equity if equity else 0,
                 # 'Frequency of Capital Turnover': sales_revenue / total_assets if total_assets else 0,
                 # 'Return on Investment': net_income / (equity + total_liabilities) if (equity + total_liabilities) else 0,
-            }
+            # }
 
-        return kpi_data
+        return current_assets, non_current_assets, kpi_data
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Unexpected error calculating KPIs: {str(e)}")
 
