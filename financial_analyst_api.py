@@ -72,8 +72,7 @@ class FinancialDetails(TypedDict, total=False):
     op_cash_flow: Optional[float]
 
 class FinancialFigures(BaseModel):
-    data: Dict[FinancialDetails]
-    #data: Dict[str, FinancialDetails]
+    data: Dict[str, FinancialDetails]
 
 @app.post("/submitData")
 def submit_data(input_data: FinancialFigures):
