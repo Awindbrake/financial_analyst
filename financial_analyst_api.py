@@ -99,7 +99,7 @@ def api_calculate_kpis(input_data: FinancialFigures):
 def calculate_kpis(financial_data: Dict[str, FinancialDetails]) -> Dict[str, Dict[str, float]]:
     try:
         kpi_data = {}
-        for year, details in financial_data.data.items():
+        for year, details in financial_data.items():
             # Directly access attributes of FinancialDetails model, ensuring defaults where necessary
             equity = details.equity or 0
             inventories = details.inventories or 0
@@ -120,7 +120,9 @@ def calculate_kpis(financial_data: Dict[str, FinancialDetails]) -> Dict[str, Dic
             op_cash_flow = details.op_cash_flow or 0
 
             # # Calculated KPIs based on the provided structure
-            # kpi_data[year] = {
+            kpi_data[year] = {
+                'Equity': equity,}
+
             #     'EBITDA': ebitda,
             #     'EBIT': ebit,
             #     'Net Income': net_income,
@@ -144,7 +146,7 @@ def calculate_kpis(financial_data: Dict[str, FinancialDetails]) -> Dict[str, Dic
                 # 'Return on Investment': net_income / (equity + total_liabilities) if (equity + total_liabilities) else 0,
             # }
 
-        return current_assets, non_current_assets, kpi_data
+        return kpi_data
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Unexpected error calculating KPIs: {str(e)}")
 
