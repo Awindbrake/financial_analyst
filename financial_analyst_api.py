@@ -83,7 +83,7 @@ def api_calculate_kpis(input_data: FinancialFigures):
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"An error occurred: {str(e)}")
 
-def calculate_kpis(financial_data: FinancialFigures) -> Dict[str, Dict[str, float]]:
+def calculate_kpis(financial_data: Dict[str, FinancialDetails]) -> Dict[str, Dict[str, float]]:
     try:
         kpi_data = {}
         for year, details in financial_data.data.items():
