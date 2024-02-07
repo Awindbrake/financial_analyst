@@ -105,50 +105,45 @@ def calculate_kpis(financial_data: Dict[str, FinancialDetails]) -> Dict[str, Dic
             inventories = details.get('inventories', 0)
             non_current_assets = details.get('intangible_assets', 0) + details.get('property_plant_and_equipment', 0) + details.get('other_non_current_assets', 0)
             current_assets = details.get('cash_and_cash_equivalents', 0) + details.get('trade_receivables', 0) + details.get('other_current_assets', 0)
-            # equity = details.equity or 0
-            # inventories = details.inventories or 0
-            # non_current_assets = (details.intangible_assets or 0) + (details.property_plant_and_equipment or 0) + (details.other_non_current_assets or 0)
-            # current_assets = (details.cash_and_cash_equivalents or 0) + (details.trade_receivables or 0) + (details.other_current_assets or 0)
-            # other_assets = details.other_assets or 0
-            # active_accruals_deferrals = details.active_accruals_deferrals or 0
-            # total_assets = non_current_assets + current_assets + other_assets + active_accruals_deferrals
-            # short_term_liabilities = details.short_term_and_current_liabilities or 0
-            # long_term_liabilities = details.long_term_debt_and_non_current_liabilities or 0
-            # provisions = details.provisions or 0
-            # passive_accruals_deferrals = details.passive_accruals_deferrals or 0
-            # total_liabilities = short_term_liabilities + long_term_liabilities + provisions + passive_accruals_deferrals
-            # sales_revenue = details.sales_revenue or 0
-            # ebitda = sales_revenue - (details.cogs or 0)
-            # ebit = ebitda - (details.depreciation or 0)
-            # net_income = ebit - (details.other_operational_expense or 0) + (details.other_operational_income or 0) - (details.interest_expenses or 0) + (details.interest_income or 0) - (details.other_expenses or 0) + (details.other_income or 0)
-            # op_cash_flow = details.op_cash_flow or 0
+            other_assets = details.get('other_assets', 0)
+            active_accruals_deferrals = details.get('active_accruals_deferrals', 0)
+            total_assets = non_current_assets + current_assets + other_assets + active_accruals_deferrals
+            short_term_liabilities = details.get('short_term_and_current_liabilities', 0)
+            long_term_liabilities = details.get('long_term_debt_and_non_current_liabilities', 0)
+            provisions = details.get('provisions', 0)
+            passive_accruals_deferrals = details.get('passive_accruals_deferrals', 0)
+            total_liabilities = short_term_liabilities + long_term_liabilities + provisions + passive_accruals_deferrals
+            sales_revenue = details.get('sales_revenue', 0)
+            ebitda = sales_revenue - details.get('cogs', 0)
+            ebit = ebitda - details.get('depreciation', 0)
+            net_income = ebit - details.get('other_operational_expense', 0) + details.get('other_operational_income', 0) - details.get('interest_expenses', 0) + details.get('interest_income', 0) - details.get('other_expenses', 0) + details.get('other_income', 0)
+            op_cash_flow = details.get('op_cash_flow', 0)
+            
 
             # # Calculated KPIs based on the provided structure
             kpi_data[year] = {
-                'Equity': equity,}
-
-            #     'EBITDA': ebitda,
-            #     'EBIT': ebit,
-            #     'Net Income': net_income,
-            #     'Equity Ratio': equity / total_assets if total_assets else 0,
-                # 'Debt Ratio': total_liabilities / total_assets if total_assets else 0,
-                # 'Equity-to-Fixed Assets Ratio I': equity / non_current_assets if non_current_assets else 0,
-                # 'Equity-to-Fixed Assets Ratio II': equity / (non_current_assets + long_term_liabilities) if non_current_assets else 0,
-                # 'Effective Debt': (short_term_liabilities + long_term_liabilities) - current_assets,
-                # 'Static Gearing': total_liabilities / equity if equity else 0,
-                # 'Dynamic Gearing in years': (short_term_liabilities + long_term_liabilities - current_assets) / op_cash_flow if op_cash_flow else 0,
-                # 'Intensity of Inventories': inventories / total_assets if total_assets else 0,
-                # 'Working Capital': current_assets - short_term_liabilities,
-                # 'Property Constitution': non_current_assets / total_assets if total_assets else 0,
-                # 'Current Ratio': current_assets / short_term_liabilities if short_term_liabilities else 0,
-                # 'Quick Ratio': (current_assets - inventories) / short_term_liabilities if short_term_liabilities else 0,
-                # 'Cash Ratio': current_assets / short_term_liabilities if short_term_liabilities else 0,
-                # 'Return on Sales': net_income / sales_revenue if sales_revenue else 0,
-                # 'Return on Assets': net_income / total_assets if total_assets else 0,
-                # 'Return on Equity': net_income / equity if equity else 0,
-                # 'Frequency of Capital Turnover': sales_revenue / total_assets if total_assets else 0,
-                # 'Return on Investment': net_income / (equity + total_liabilities) if (equity + total_liabilities) else 0,
-            # }
+                'EBITDA': ebitda,
+                'EBIT': ebit,
+                'Net Income': net_income,
+                'Equity Ratio': equity / total_assets if total_assets else 0,
+                'Debt Ratio': total_liabilities / total_assets if total_assets else 0,
+                'Equity-to-Fixed Assets Ratio I': equity / non_current_assets if non_current_assets else 0,
+                'Equity-to-Fixed Assets Ratio II': equity / (non_current_assets + long_term_liabilities) if non_current_assets else 0,
+                'Effective Debt': (short_term_liabilities + long_term_liabilities) - current_assets,
+                'Static Gearing': total_liabilities / equity if equity else 0,
+                'Dynamic Gearing in years': (short_term_liabilities + long_term_liabilities - current_assets) / op_cash_flow if op_cash_flow else 0,
+                'Intensity of Inventories': inventories / total_assets if total_assets else 0,
+                'Working Capital': current_assets - short_term_liabilities,
+                'Property Constitution': non_current_assets / total_assets if total_assets else 0,
+                'Current Ratio': current_assets / short_term_liabilities if short_term_liabilities else 0,
+                'Quick Ratio': (current_assets - inventories) / short_term_liabilities if short_term_liabilities else 0,
+                'Cash Ratio': current_assets / short_term_liabilities if short_term_liabilities else 0,
+                'Return on Sales': net_income / sales_revenue if sales_revenue else 0,
+                'Return on Assets': net_income / total_assets if total_assets else 0,
+                'Return on Equity': net_income / equity if equity else 0,
+                'Frequency of Capital Turnover': sales_revenue / total_assets if total_assets else 0,
+                'Return on Investment': net_income / (equity + total_liabilities) if (equity + total_liabilities) else 0,
+            }
 
         return kpi_data
     except Exception as e:
