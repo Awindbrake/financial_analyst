@@ -8,7 +8,7 @@ app = FastAPI(
     version="1.0.0",
     servers=[
         {
-            "url": "https://financial-analysis.herokuapp.com",
+            "url": "https://financialanalyst-d8993699e73a.herokuapp.com",
             "description": "Financial Analysis API"
         }
     ]
