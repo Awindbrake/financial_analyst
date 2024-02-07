@@ -101,23 +101,27 @@ def calculate_kpis(financial_data: Dict[str, FinancialDetails]) -> Dict[str, Dic
         kpi_data = {}
         for year, details in financial_data.items():
             # Directly access attributes of FinancialDetails model, ensuring defaults where necessary
-            equity = details.equity or 0
-            inventories = details.inventories or 0
-            non_current_assets = (details.intangible_assets or 0) + (details.property_plant_and_equipment or 0) + (details.other_non_current_assets or 0)
-            current_assets = (details.cash_and_cash_equivalents or 0) + (details.trade_receivables or 0) + (details.other_current_assets or 0)
-            other_assets = details.other_assets or 0
-            active_accruals_deferrals = details.active_accruals_deferrals or 0
-            total_assets = non_current_assets + current_assets + other_assets + active_accruals_deferrals
-            short_term_liabilities = details.short_term_and_current_liabilities or 0
-            long_term_liabilities = details.long_term_debt_and_non_current_liabilities or 0
-            provisions = details.provisions or 0
-            passive_accruals_deferrals = details.passive_accruals_deferrals or 0
-            total_liabilities = short_term_liabilities + long_term_liabilities + provisions + passive_accruals_deferrals
-            sales_revenue = details.sales_revenue or 0
-            ebitda = sales_revenue - (details.cogs or 0)
-            ebit = ebitda - (details.depreciation or 0)
-            net_income = ebit - (details.other_operational_expense or 0) + (details.other_operational_income or 0) - (details.interest_expenses or 0) + (details.interest_income or 0) - (details.other_expenses or 0) + (details.other_income or 0)
-            op_cash_flow = details.op_cash_flow or 0
+            equity = details.get('equity', 0)
+            inventories = details.get('inventories', 0)
+            non_current_assets = details.get('intangible_assets', 0) + details.get('property_plant_and_equipment', 0) + details.get('other_non_current_assets', 0)
+            current_assets = details.get('cash_and_cash_equivalents', 0) + details.get('trade_receivables', 0) + details.get('other_current_assets', 0)
+            # equity = details.equity or 0
+            # inventories = details.inventories or 0
+            # non_current_assets = (details.intangible_assets or 0) + (details.property_plant_and_equipment or 0) + (details.other_non_current_assets or 0)
+            # current_assets = (details.cash_and_cash_equivalents or 0) + (details.trade_receivables or 0) + (details.other_current_assets or 0)
+            # other_assets = details.other_assets or 0
+            # active_accruals_deferrals = details.active_accruals_deferrals or 0
+            # total_assets = non_current_assets + current_assets + other_assets + active_accruals_deferrals
+            # short_term_liabilities = details.short_term_and_current_liabilities or 0
+            # long_term_liabilities = details.long_term_debt_and_non_current_liabilities or 0
+            # provisions = details.provisions or 0
+            # passive_accruals_deferrals = details.passive_accruals_deferrals or 0
+            # total_liabilities = short_term_liabilities + long_term_liabilities + provisions + passive_accruals_deferrals
+            # sales_revenue = details.sales_revenue or 0
+            # ebitda = sales_revenue - (details.cogs or 0)
+            # ebit = ebitda - (details.depreciation or 0)
+            # net_income = ebit - (details.other_operational_expense or 0) + (details.other_operational_income or 0) - (details.interest_expenses or 0) + (details.interest_income or 0) - (details.other_expenses or 0) + (details.other_income or 0)
+            # op_cash_flow = details.op_cash_flow or 0
 
             # # Calculated KPIs based on the provided structure
             kpi_data[year] = {
