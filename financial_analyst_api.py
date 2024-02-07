@@ -100,7 +100,7 @@ def api_calculate_kpis(input_data: FinancialFigures):
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"An error occurred: {str(e)}")
 
-def calculate_kpis(financial_data: FinancialDetails):
+def calculate_kpis(financial_data: FinancialFigures):
     try:
         # Retrieve values from financial_data, set defaults to 0 if not present
         equity = financial_data.get('equity', 0)
