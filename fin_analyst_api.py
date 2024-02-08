@@ -39,31 +39,7 @@ class FinancialData(BaseModel):
     interest_income: float = Field(..., description="Total interest income.")
     op_cash_flow: float = Field(..., description="Total operating cash flow.")
 
-# class FinancialData(BaseModel):
-#     intangible_assets: float = Field(..., gt=0, description="Total intangible assets.")
-#     property_plant_and_equipment: float = Field(..., gt=0, description="Total property, plant, and equipment.")
-#     other_non_current_assets: float = Field(..., gt=0, description="Total other non-current assets.")
-#     inventories: float = Field(..., gt=0, description="Total inventories.")
-#     trade_receivables: float = Field(..., gt=0, description="Total trade receivables.")
-#     cash_and_cash_equivalents: float = Field(..., gt=0, description="Total cash and cash equivalents.")
-#     other_current_assets: float = Field(..., gt=0, description="Total other current assets.")
-#     other_assets: float = Field(..., gt=0, description="Total other assets.")
-#     active_accruals_deferrals: float = Field(..., gt=0, description="Total active accruals and deferrals.")
-#     equity: float = Field(..., gt=0, description="Total equity.")
-#     short_term_liabilities: float = Field(..., gt=0, description="Total short-term and current liabilities.")
-#     long_term_liabilities: float = Field(..., gt=0, description="Total long-term debt and non-current liabilities.")
-#     provisions: float = Field(..., gt=0, description="Total provisions.")
-#     passive_accruals_deferrals: float = Field(..., gt=0, description="Total passive accruals and deferrals.")
-#     sales_revenue: float = Field(..., gt=0, description="Total sales revenue.")
-#     cogs: float = Field(..., gt=0, description="Total cost of goods sold.")
-#     other_operational_expense: float = Field(..., gt=0, description="Total other operational expenses.")
-#     depreciation: float = Field(..., gt=0, description="Total depreciation.")
-#     interest_expenses: float = Field(..., gt=0, description="Total interest expenses.")
-#     other_expenses: float = Field(..., gt=0, description="Total other expenses.")
-#     other_operational_income: float = Field(..., gt=0, description="Total other operational income.")
-#     other_income: float = Field(..., gt=0, description="Total other income.")
-#     interest_income: float = Field(..., gt=0, description="Total interest income.")
-#     op_cash_flow: float = Field(..., gt=0, description="Total operating cash flow.")
+
 
 def calculate_kpi(intangible_assets: float, property_plant_and_equipment: float, other_non_current_assets: float,
                          inventories: float, trade_receivables: float, cash_and_cash_equivalents: float,
@@ -106,11 +82,7 @@ def calculate_kpi(intangible_assets: float, property_plant_and_equipment: float,
        cash_ratio, return_on_sales, return_on_assets, return_on_equity, frequency_of_capital_turnover, \
        return_on_investment]
 
-def calculate_earnings(sales_revenues: float, cogs: float) -> float:
-    return sales_revenues - cogs
 
-def calculate_return_on_equity(earnings: float, equity: float) -> float:
-    return earnings / equity
 
 @app.post("/analyze")
 async def analyze_financials(data: FinancialData):
