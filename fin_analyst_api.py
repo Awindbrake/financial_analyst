@@ -57,23 +57,23 @@ def calculate_kpi(intangible_assets: float, property_plant_and_equipment: float,
     ebitda = sales_revenue - cogs - other_operational_expense  + other_operational_income 
     ebit = ebitda - depreciation
     net_income = net_income = ebit - interest_expenses + interest_income - other_expenses + other_income
-    equity_ratio = equity / total_assets if total_assets else 0
-    debt_ratio = total_liabilities / total_assets if total_assets else 0
+    equity_ratio = equity / (equity + total_liabilities) if (equity + total_liabilities) else 0
+    debt_ratio = total_liabilities / (equity + total_liabilities) if (equity + total_liabilities) else 0
     equity_to_fixed_assets_ratio_I = equity / non_current_assets if non_current_assets else 0
-    equity_to_fixed_assets_ratio_II = equity / (non_current_assets + long_term_liabilities) if (non_current_assets + long_term_liabilities) else 0
-    effective_debt = (short_term_liabilities + long_term_liabilities) - current_assets
+    equity_to_fixed_assets_ratio_II = (equity + long_term_liabilities) / non_current_assets if non_current_assets else 0
+    effective_debt = (short_term_liabilities + long_term_liabilities) - (trade_receivables + cash_and_cash_equivalents)
     static_gearing = total_liabilities / equity if equity else 0
-    dynamic_gearing_in_years = (short_term_liabilities + long_term_liabilities - current_assets) / op_cash_flow if op_cash_flow else 0
+    dynamic_gearing_in_years = (short_term_liabilities + long_term_liabilities) / ebitda if ebitda else 0
     intensity_of_inventories = inventories / total_assets if total_assets else 0
     working_capital = current_assets - short_term_liabilities
-    property_constitution = non_current_assets / total_assets if total_assets else 0
+    property_constitution = non_current_assets / current_assets if current_assets else 0
     current_ratio = current_assets / short_term_liabilities if short_term_liabilities else 0
-    quick_ratio = (current_assets - inventories) / short_term_liabilities if short_term_liabilities else 0
+    quick_ratio = (trade_receivables + cash_and_cash_equivalents) / short_term_liabilities if short_term_liabilities else 0
     cash_ratio = cash_and_cash_equivalents / short_term_liabilities if short_term_liabilities else 0
     return_on_sales = net_income / sales_revenue if sales_revenue else 0
-    return_on_assets = net_income / total_assets if total_assets else 0
+    return_on_assets = (net_income + abs(interest_expense)) / total_assets if total_assets else 0
     return_on_equity = net_income / equity if equity else 0
-    frequency_of_capital_turnover = sales_revenue / total_assets if total_assets else 0
+    frequency_of_capital_turnover = sales_revenue / (equity + total_liabilities) if (equity + total_liabilities) else 0
     return_on_investment = net_income / (equity + total_liabilities) if (equity + total_liabilities) else 0
 
     return [ebitda, ebit, net_income, equity_ratio, debt_ratio, equity_to_fixed_assets_ratio_I, \
