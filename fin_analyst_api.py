@@ -39,31 +39,6 @@ class FinancialData(BaseModel):
     interest_income: float = Field(..., description="Total interest income.")
     op_cash_flow: float = Field(..., description="Total operating cash flow.")
 
-# class FinancialData(BaseModel):
-#     intangible_assets: float = Field(..., gt=0, description="Total intangible assets.")
-#     property_plant_and_equipment: float = Field(..., gt=0, description="Total property, plant, and equipment.")
-#     other_non_current_assets: float = Field(..., gt=0, description="Total other non-current assets.")
-#     inventories: float = Field(..., gt=0, description="Total inventories.")
-#     trade_receivables: float = Field(..., gt=0, description="Total trade receivables.")
-#     cash_and_cash_equivalents: float = Field(..., gt=0, description="Total cash and cash equivalents.")
-#     other_current_assets: float = Field(..., gt=0, description="Total other current assets.")
-#     other_assets: float = Field(..., gt=0, description="Total other assets.")
-#     active_accruals_deferrals: float = Field(..., gt=0, description="Total active accruals and deferrals.")
-#     equity: float = Field(..., gt=0, description="Total equity.")
-#     short_term_liabilities: float = Field(..., gt=0, description="Total short-term and current liabilities.")
-#     long_term_liabilities: float = Field(..., gt=0, description="Total long-term debt and non-current liabilities.")
-#     provisions: float = Field(..., gt=0, description="Total provisions.")
-#     passive_accruals_deferrals: float = Field(..., gt=0, description="Total passive accruals and deferrals.")
-#     sales_revenue: float = Field(..., gt=0, description="Total sales revenue.")
-#     cogs: float = Field(..., gt=0, description="Total cost of goods sold.")
-#     other_operational_expense: float = Field(..., gt=0, description="Total other operational expenses.")
-#     depreciation: float = Field(..., gt=0, description="Total depreciation.")
-#     interest_expenses: float = Field(..., gt=0, description="Total interest expenses.")
-#     other_expenses: float = Field(..., gt=0, description="Total other expenses.")
-#     other_operational_income: float = Field(..., gt=0, description="Total other operational income.")
-#     other_income: float = Field(..., gt=0, description="Total other income.")
-#     interest_income: float = Field(..., gt=0, description="Total interest income.")
-#     op_cash_flow: float = Field(..., gt=0, description="Total operating cash flow.")
 
 def calculate_kpi(intangible_assets: float, property_plant_and_equipment: float, other_non_current_assets: float,
                          inventories: float, trade_receivables: float, cash_and_cash_equivalents: float,
@@ -81,36 +56,31 @@ def calculate_kpi(intangible_assets: float, property_plant_and_equipment: float,
     ebitda = sales_revenue - cogs - other_operational_expense  + other_operational_income 
     ebit = ebitda - depreciation
     net_income = net_income = ebit - interest_expenses + interest_income - other_expenses + other_income
-    equity_ratio = equity / total_assets if total_assets else 0
-    debt_ratio = total_liabilities / total_assets if total_assets else 0
+    equity_ratio = equity / (equity + total_liabilities) if (equity + total_liabilities) else 0
+    debt_ratio = total_liabilities / (equity + total_liabilities) if (equity + total_liabilities) else 0
     equity_to_fixed_assets_ratio_I = equity / non_current_assets if non_current_assets else 0
-    equity_to_fixed_assets_ratio_II = equity / (non_current_assets + long_term_liabilities) if (non_current_assets + long_term_liabilities) else 0
-    effective_debt = (short_term_liabilities + long_term_liabilities) - current_assets
+    equity_to_fixed_assets_ratio_II = (equity + long_term_liabilities) / non_current_assets if non_current_assets else 0
+    effective_debt = (short_term_liabilities + long_term_liabilities) - (trade_receivables + cash_and_cash_equivalents)
     static_gearing = total_liabilities / equity if equity else 0
-    dynamic_gearing_in_years = (short_term_liabilities + long_term_liabilities - current_assets) / op_cash_flow if op_cash_flow else 0
+    dynamic_gearing_in_years = (short_term_liabilities + long_term_liabilities) / ebitda if ebitda else 0
     intensity_of_inventories = inventories / total_assets if total_assets else 0
     working_capital = current_assets - short_term_liabilities
-    property_constitution = non_current_assets / total_assets if total_assets else 0
+    property_constitution = non_current_assets / current_assets if current_assets else 0
     current_ratio = current_assets / short_term_liabilities if short_term_liabilities else 0
-    quick_ratio = (current_assets - inventories) / short_term_liabilities if short_term_liabilities else 0
+    quick_ratio = (trade_receivables + cash_and_cash_equivalents) / short_term_liabilities if short_term_liabilities else 0
     cash_ratio = cash_and_cash_equivalents / short_term_liabilities if short_term_liabilities else 0
     return_on_sales = net_income / sales_revenue if sales_revenue else 0
-    return_on_assets = net_income / total_assets if total_assets else 0
+    return_on_assets = (net_income + abs(interest_expense)) / total_assets if total_assets else 0
     return_on_equity = net_income / equity if equity else 0
-    frequency_of_capital_turnover = sales_revenue / total_assets if total_assets else 0
+    frequency_of_capital_turnover = sales_revenue / (equity + total_liabilities) if (equity + total_liabilities) else 0
     return_on_investment = net_income / (equity + total_liabilities) if (equity + total_liabilities) else 0
 
-    return [ebitda, ebit, net_income, equity_ratio, debt_ratio, equity_to_fixed_assets_ratio_I, \
+    return [current_assets, non_current_assets, equity, short_term_liabilities, long_term_liabilities, sales_revenue, ebitda, ebit, net_income, equity_ratio, debt_ratio, equity_to_fixed_assets_ratio_I, \
        equity_to_fixed_assets_ratio_II, effective_debt, static_gearing, dynamic_gearing_in_years, \
        intensity_of_inventories, working_capital, property_constitution, current_ratio, quick_ratio, \
        cash_ratio, return_on_sales, return_on_assets, return_on_equity, frequency_of_capital_turnover, \
        return_on_investment]
 
-def calculate_earnings(sales_revenues: float, cogs: float) -> float:
-    return sales_revenues - cogs
-
-def calculate_return_on_equity(earnings: float, equity: float) -> float:
-    return earnings / equity
 
 @app.post("/analyze")
 async def analyze_financials(data: FinancialData):
