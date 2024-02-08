@@ -56,7 +56,7 @@ def calculate_kpi(intangible_assets: float, property_plant_and_equipment: float,
     total_liabilities = short_term_liabilities+long_term_liabilities
     ebitda = sales_revenue - cogs - other_operational_expense  + other_operational_income 
     ebit = ebitda - depreciation
-    net_income = net_income = ebit - interest_expenses + interest_income - other_expenses + other_income
+    net_income ebit - interest_expenses + interest_income - other_expenses + other_income
     equity_ratio = equity / (equity + total_liabilities) if (equity + total_liabilities) else 0
     debt_ratio = total_liabilities / (equity + total_liabilities) if (equity + total_liabilities) else 0
     equity_to_fixed_assets_ratio_I = equity / non_current_assets if non_current_assets else 0
@@ -71,7 +71,7 @@ def calculate_kpi(intangible_assets: float, property_plant_and_equipment: float,
     quick_ratio = (trade_receivables + cash_and_cash_equivalents) / short_term_liabilities if short_term_liabilities else 0
     cash_ratio = cash_and_cash_equivalents / short_term_liabilities if short_term_liabilities else 0
     return_on_sales = net_income / sales_revenue if sales_revenue else 0
-    return_on_assets = (net_income + interest_expense) / total_assets if total_assets else 0
+    return_on_assets = (net_income + abs(interest_expenses)) / total_assets if total_assets else 0
     return_on_equity = net_income / equity if equity else 0
     frequency_of_capital_turnover = sales_revenue / (equity + total_liabilities) if (equity + total_liabilities) else 0
     return_on_investment = net_income / (equity + total_liabilities) if (equity + total_liabilities) else 0
