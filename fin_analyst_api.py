@@ -75,12 +75,12 @@ def calculate_kpi(intangible_assets: float, property_plant_and_equipment: float,
     frequency_of_capital_turnover = sales_revenue / (equity + total_liabilities) if (equity + total_liabilities) else 0
     return_on_investment = net_income / (equity + total_liabilities) if (equity + total_liabilities) else 0
 
-    return [current_assets, non_current_assets, equity, short_term_liabilities, long_term_liabilities, sales_revenue, ebitda, ebit, net_income, equity_ratio, debt_ratio, equity_to_fixed_assets_ratio_I, \
+    return [ebitda, ebit, net_income, equity_ratio, debt_ratio, equity_to_fixed_assets_ratio_I, \
        equity_to_fixed_assets_ratio_II, effective_debt, static_gearing, dynamic_gearing_in_years, \
        intensity_of_inventories, working_capital, property_constitution, current_ratio, quick_ratio, \
        cash_ratio, return_on_sales, return_on_assets, return_on_equity, frequency_of_capital_turnover, \
        return_on_investment]
-
+#current_assets, non_current_assets, equity, short_term_liabilities, long_term_liabilities, sales_revenue, 
 
 @app.post("/analyze")
 async def analyze_financials(data: FinancialData):
