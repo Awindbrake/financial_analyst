@@ -71,7 +71,7 @@ def calculate_kpi(intangible_assets: float, property_plant_and_equipment: float,
     quick_ratio = (trade_receivables + cash_and_cash_equivalents) / short_term_liabilities if short_term_liabilities else 0
     cash_ratio = cash_and_cash_equivalents / short_term_liabilities if short_term_liabilities else 0
     return_on_sales = net_income / sales_revenue if sales_revenue else 0
-    return_on_assets = (net_income + abs(interest_expense)) / total_assets if total_assets else 0
+    return_on_assets = (net_income + interest_expense) / total_assets if total_assets else 0
     return_on_equity = net_income / equity if equity else 0
     frequency_of_capital_turnover = sales_revenue / (equity + total_liabilities) if (equity + total_liabilities) else 0
     return_on_investment = net_income / (equity + total_liabilities) if (equity + total_liabilities) else 0
