@@ -56,7 +56,7 @@ def calculate_kpi(intangible_assets: float, property_plant_and_equipment: float,
     total_liabilities = short_term_liabilities+long_term_liabilities
     ebitda = sales_revenue - cogs - other_operational_expense  + other_operational_income 
     ebit = ebitda - depreciation
-    net_income = net_income = ebit - interest_expenses + interest_income - other_expenses + other_income
+    net_income = ebit - interest_expenses + interest_income - other_expenses + other_income
     equity_ratio = equity / total_assets if total_assets else 0
     debt_ratio = total_liabilities / total_assets if total_assets else 0
     equity_to_fixed_assets_ratio_I = equity / non_current_assets if non_current_assets else 0
@@ -78,7 +78,17 @@ def calculate_kpi(intangible_assets: float, property_plant_and_equipment: float,
 
     # Return a dictionary instead of a list
     return {
+        "non-current assets:":non_current_assets,
+        "current assets:":current_assets,
+        "total assets": total_assets,
+        "equity": equity,
+        "long-term liabilities:": long_term_liabilities,
+        "short-term liabilities:": short_term_liabilities,
+        "total liabilities:": total_liabilities,
+        "Sales revenue:": sales_revenue,
+        "cost of goods sold (COGS):": cogs,
         "EBITDA": ebitda,
+        "depreciation and amortization:":depreciation,
         "EBIT": ebit,
         "Net Income": net_income,
         "Equity Ratio": equity_ratio,
