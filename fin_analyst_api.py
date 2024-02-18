@@ -59,9 +59,9 @@ def calculate_kpi(intangible_assets: float, property_plant_and_equipment: float,
     total_liabilities = short_term_liabilities+long_term_liabilities
     other_operational_expenses = other_operational_expense + abs(selling_expenses) + abs(personnel_expenses)
     if changes_in_inventory != 0:
-        ebitda = sales_revenue + changes_in_inventory - cogs - abs(other_operational_expenses) + other_operational_income 
+        ebitda = sales_revenue + changes_in_inventory - abs(cogs) - abs(other_operational_expenses) + other_operational_income 
     else:
-        ebitda = sales_revenue - cogs - abs(other_operational_expenses)  + other_operational_income 
+        ebitda = sales_revenue - abs(cogs) - abs(other_operational_expenses)  + other_operational_income 
     ebit = ebitda - abs(depreciation)
     net_income = ebit - abs(financial_expenses) + financial_income - abs(other_expenses) + other_income
     equity_ratio = round(equity / total_assets, 4) if total_assets else 0 
