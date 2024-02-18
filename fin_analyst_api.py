@@ -76,40 +76,65 @@ def calculate_kpi(intangible_assets: float, property_plant_and_equipment: float,
     frequency_of_capital_turnover = sales_revenue / total_assets if total_assets else 0
     return_on_investment = net_income / (equity + total_liabilities) if (equity + total_liabilities) else 0
 
+    
+    ebitda_string = f"EBITDA (Earnings Before Interest, Taxes, Depreciation, and Amortization) of {ebitda:,.2f} indicates the company's operational profitability before non-cash charges and capital structure effects."
+    ebit_string = f"EBIT (Earnings Before Interest and Taxes) of {ebit:,.2f} represents the company's operating income after subtracting all operational expenses except interest and taxes."
+    net_income_string = f"Net Income of {net_income:,.2f} is the company's total earnings after deducting all expenses, including interest and taxes, indicating the company's profitability."
+    equity_ratio_string = f"The Equity Ratio of {equity_ratio*100:.2f}% indicates that equity finances {equity_ratio*100:.2f}% of the company's assets, showing the proportion of ownership funding."
+    debt_ratio_string = f"The Debt Ratio of {debt_ratio*100:.2f}% shows that {debt_ratio*100:.2f}% of the company's assets are financed through debt, highlighting the leverage level."
+    equity_to_fixed_assets_ratio_I_string = f"The Equity to Fixed Assets Ratio I of {equity_to_fixed_assets_ratio_I:.2f} indicates the proportion of equity financing used for non-current assets."
+    equity_to_fixed_assets_ratio_II_string = f"The Equity to Fixed Assets Ratio II of {equity_to_fixed_assets_ratio_II:.2f} shows the proportion of equity and long-term liabilities funding non-current assets."
+    effective_debt_string = f"Effective Debt of {effective_debt:,.2f} represents the net amount of short and long-term liabilities after considering current assets, highlighting the company's net leverage."
+    static_gearing_string = f"Static Gearing of {static_gearing:.2f} indicates the ratio of total liabilities to equity, showing the degree of financial leverage and risk."
+    dynamic_gearing_in_years_string = f"Dynamic Gearing in Years of {dynamic_gearing_in_years:.2f} years shows how long it would take to pay off the company's net debt using its operating cash flow."
+    intensity_of_inventories_string = f"Inventory Intensity of {intensity_of_inventories*100:.2f}% indicates that {intensity_of_inventories*100:.2f}% of the company's assets are tied up in inventories."
+    working_capital_string = f"Working Capital of {working_capital:,.2f} represents the excess of current assets over short-term liabilities, indicating the company's short-term financial health."
+    property_constitution_string = f"Property Constitution of {property_constitution*100:.2f}% shows that {property_constitution*100:.2f}% of the company's assets are non-current, indicating investment in long-term assets."
+    current_ratio_string = f"The Current Ratio of {current_ratio:.2f} indicates that for every dollar of short-term liabilities, the company has {current_ratio:.2f} dollars in current assets, measuring liquidity."
+    quick_ratio_string = f"The Quick Ratio of {quick_ratio:.2f} measures the company's ability to meet short-term obligations with its most liquid assets, excluding inventories."
+    cash_ratio_string = f"The Cash Ratio of {cash_ratio:.2f} shows the company's ability to cover short-term liabilities with cash and cash equivalents, indicating immediate liquidity."
+    return_on_sales_string = f"The Return on Sales of {return_on_sales*100:.2f}% indicates that the company earns {return_on_sales*100:.2f}% net income for every dollar of sales, measuring profitability."
+    return_on_assets_string = f"The Return on Assets of {return_on_assets*100:.2f}% shows that the company generates {return_on_assets*100:.2f}% net income for every dollar of assets, assessing asset efficiency."
+    return_on_equity_string = f"The Return on Equity of {return_on_equity*100:.2f}% indicates that the company generates {return_on_equity*100:.2f}% net income for every dollar of equity, measuring profitability to shareholders."
+    frequency_of_capital_turnover_string = f"The Frequency of Capital Turnover of {frequency_of_capital_turnover:.2f} times indicates how often the company's assets are converted into sales, assessing asset utilization."
+    return_on_investment_string = f"The Return on Investment of {return_on_investment*100:.2f}% shows the company's efficiency in using the combined equity and liabilities to generate profits."
+
+
+
     # Return a dictionary instead of a list
     return {
-        "non-current assets:":non_current_assets,
-        "current assets:":current_assets,
-        "total assets": total_assets,
-        "equity": equity,
-        "long-term liabilities:": long_term_liabilities,
-        "short-term liabilities:": short_term_liabilities,
-        "total liabilities:": total_liabilities,
-        "Sales revenue:": sales_revenue,
-        "cost of goods sold (COGS):": cogs,
-        "EBITDA": ebitda,
-        "depreciation and amortization:":depreciation,
-        "EBIT": ebit,
-        "Net Income": net_income,
-        "Equity Ratio": equity_ratio,
-        "Debt Ratio": debt_ratio,
-        "Equity to Fixed Assets Ratio I": equity_to_fixed_assets_ratio_I,
-        "Equity to Fixed Assets Ratio II": equity_to_fixed_assets_ratio_II,
-        "Effective Debt": effective_debt,
-        "Static Gearing": static_gearing,
-        "Dynamic Gearing in Years": dynamic_gearing_in_years,
-        "Intensity of Inventories": intensity_of_inventories,
-        "Working Capital": working_capital,
-        "Property Constitution": property_constitution,
-        "Current Ratio": current_ratio,
-        "Quick Ratio": quick_ratio,
-        "Cash Ratio": cash_ratio,
-        "Return on Sales": return_on_sales,
-        "Return on Assets": return_on_assets,
-        "Return on Equity": return_on_equity,
-        "Frequency of Capital Turnover": frequency_of_capital_turnover,
-        "Return on Investment": return_on_investment
-    }
+    "non-current assets": non_current_assets,
+    "current assets": current_assets,
+    "total assets": total_assets,
+    "equity": equity,
+    "long-term liabilities": long_term_liabilities,
+    "short-term liabilities": short_term_liabilities,
+    "total liabilities": total_liabilities,
+    "Sales revenue": sales_revenue,
+    "cost of goods sold (COGS)": cogs,
+    "EBITDA": {"value": ebitda, "explanation": ebitda_string},
+    "depreciation and amortization": depreciation,
+    "EBIT": {"value": ebit, "explanation": ebit_string},
+    "Net Income": {"value": net_income, "explanation": net_income_string},
+    "Equity Ratio": {"value": equity_ratio, "explanation": equity_ratio_string},
+    "Debt Ratio": {"value": debt_ratio, "explanation": debt_ratio_string},
+    "Equity to Fixed Assets Ratio I": {"value": equity_to_fixed_assets_ratio_I, "explanation": equity_to_fixed_assets_ratio_I_string},
+    "Equity to Fixed Assets Ratio II": {"value": equity_to_fixed_assets_ratio_II, "explanation": equity_to_fixed_assets_ratio_II_string},
+    "Effective Debt": {"value": effective_debt, "explanation": effective_debt_string},
+    "Static Gearing": {"value": static_gearing, "explanation": static_gearing_string},
+    "Dynamic Gearing in Years": {"value": dynamic_gearing_in_years, "explanation": dynamic_gearing_in_years_string},
+    "Intensity of Inventories": {"value": intensity_of_inventories, "explanation": intensity_of_inventories_string},
+    "Working Capital": {"value": working_capital, "explanation": working_capital_string},
+    "Property Constitution": {"value": property_constitution, "explanation": property_constitution_string},
+    "Current Ratio": {"value": current_ratio, "explanation": current_ratio_string},
+    "Quick Ratio": {"value": quick_ratio, "explanation": quick_ratio_string},
+    "Cash Ratio": {"value": cash_ratio, "explanation": cash_ratio_string},
+    "Return on Sales": {"value": return_on_sales, "explanation": return_on_sales_string},
+    "Return on Assets": {"value": return_on_assets, "explanation": return_on_assets_string},
+    "Return on Equity": {"value": return_on_equity, "explanation": return_on_equity_string},
+    "Frequency of Capital Turnover": {"value": frequency_of_capital_turnover, "explanation": frequency_of_capital_turnover_string},
+    "Return on Investment": {"value": return_on_investment, "explanation": return_on_investment_string}
+}
 
 def calculate_earnings(sales_revenues: float, cogs: float) -> float:
     return sales_revenues - cogs
