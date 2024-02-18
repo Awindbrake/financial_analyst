@@ -48,8 +48,8 @@ def calculate_kpi(intangible_assets: float, property_plant_and_equipment: float,
                          inventories: float, trade_receivables: float, cash_and_cash_equivalents: float,
                          other_current_assets: float, other_assets: float, active_accruals_deferrals: float,
                          equity: float, short_term_liabilities: float, long_term_liabilities: float,
-                         provisions: float, passive_accruals_deferrals: float, sales_revenue: float, cogs: float,
-                         changes_in_inventory: float, other_operational_expense: float, depreciation: float, personnel_expenses: float, selling_expenses: float, financial_expenses: float,
+                         provisions: float, passive_accruals_deferrals: float, sales_revenue: float, changes_in_inventory: float, cogs: float,
+                         other_operational_expense: float, depreciation: float, personnel_expenses: float, selling_expenses: float, financial_expenses: float,
                          other_expenses: float, other_operational_income: float, other_income: float,
                          financial_income: float, op_cash_flow: float) -> dict:
     
