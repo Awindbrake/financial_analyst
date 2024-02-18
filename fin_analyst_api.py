@@ -157,9 +157,8 @@ async def analyze_financials(data: FinancialData):
         data.inventories, data.trade_receivables, data.cash_and_cash_equivalents, data.other_current_assets,
         data.other_assets, data.active_accruals_deferrals, data.equity, data.short_term_liabilities,
         data.long_term_liabilities, data.provisions, data.passive_accruals_deferrals, data.sales_revenue,
-        data.changes_in_inventories, data.selling_expenses, data.personnel_expenses,
-        data.cogs, data.other_operational_expense, data.depreciation, data.financial_expenses,
-        data.other_expenses, data.other_operational_income, data.other_income, data.financial_income,
+        data.changes_in_inventories, data.cogs,data.other_operational_expense, data.depreciation, data.personnel_expenses, data.selling_expenses,
+        data.financial_expenses, data.other_expenses, data.other_operational_income, data.other_income, data.financial_income,
         data.op_cash_flow
     )
     return {
