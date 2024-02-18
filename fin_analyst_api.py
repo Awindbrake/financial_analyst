@@ -14,30 +14,33 @@ app = FastAPI(
     ]
 )
 class FinancialData(BaseModel):
-    intangible_assets: float = Field(..., description="Total intangible assets.")
-    property_plant_and_equipment: float = Field(..., description="Total property, plant, and equipment.")
-    other_non_current_assets: float = Field(..., description="Total other non-current assets.")
-    inventories: float = Field(..., description="Total inventories.")
-    trade_receivables: float = Field(..., description="Total trade receivables.")
-    cash_and_cash_equivalents: float = Field(..., description="Total cash and cash equivalents.")
-    other_current_assets: float = Field(..., description="Total other current assets.")
-    other_assets: float = Field(..., description="Total other assets.")
-    active_accruals_deferrals: float = Field(..., description="Total active accruals and deferrals.")
-    equity: float = Field(..., description="Total equity.")
-    short_term_liabilities: float = Field(..., description="Total short-term liabilities.")
-    long_term_liabilities: float = Field(..., description="Total long-term liabilities.")
-    provisions: float = Field(..., description="Total provisions.")
-    passive_accruals_deferrals: float = Field(..., description="Total passive accruals and deferrals.")
-    sales_revenue: float = Field(..., description="Total sales revenue.")
-    cogs: float = Field(..., description="Total cost of goods sold.")
-    other_operational_expense: float = Field(..., description="Total other operational expenses.")
-    depreciation: float = Field(..., description="Total depreciation.")
-    interest_expenses: float = Field(..., description="Total interest expenses.")
-    other_expenses: float = Field(..., description="Total other expenses.")
-    other_operational_income: float = Field(..., description="Total other operational income.")
-    other_income: float = Field(..., description="Total other income.")
-    interest_income: float = Field(..., description="Total interest income.")
-    op_cash_flow: float = Field(..., description="Total operating cash flow.")
+    intangible_assets: float = Field(0, description="Total intangible assets.")
+    property_plant_and_equipment: float = Field(0, description="Total property, plant, and equipment.")
+    other_non_current_assets: float = Field(0, description="Total other non-current assets.")
+    inventories: float = Field(0, description="Total inventories.")
+    trade_receivables: float = Field(0, description="Total trade receivables.")
+    cash_and_cash_equivalents: float = Field(0, description="Total cash and cash equivalents.")
+    other_current_assets: float = Field(0, description="Total other current assets.")
+    other_assets: float = Field(0, description="Total other assets.")
+    active_accruals_deferrals: float = Field(0, description="Total active accruals and deferrals.")
+    equity: float = Field(0, description="Total equity.")
+    short_term_liabilities: float = Field(0, description="Total short-term liabilities.")
+    long_term_liabilities: float = Field(0, description="Total long-term liabilities.")
+    provisions: float = Field(0, description="Total provisions.")
+    passive_accruals_deferrals: float = Field(0, description="Total passive accruals and deferrals.")
+    sales_revenue: float = Field(0, description="Total sales revenue.")
+    changes_in_inventories: float = Field(0, description="changes of finished products")
+    cogs: float = Field(0, description="Total cost of goods sold.")
+    other_operational_expense: float = Field(0, description="Total other operational expenses.")
+    depreciation: float = Field(0, description="Total depreciation.")
+    personnel_expenses: float = Field(0, description="expenses for staff.")
+    selling_expenses: float = Field(0, description="sales costs.")
+    financial_expenses: float = Field(0, description="Total interest expenses.")
+    other_expenses: float = Field(0, description="Total other expenses.")
+    other_operational_income: float = Field(0, description="Total other operational income.")
+    other_income: float = Field(0, description="Total other income.")
+    financial_income: float = Field(0, description="Total interest income.")
+    op_cash_flow: float = Field(0, description="Total operating cash flow.")
 
 
 
@@ -46,17 +49,20 @@ def calculate_kpi(intangible_assets: float, property_plant_and_equipment: float,
                          other_current_assets: float, other_assets: float, active_accruals_deferrals: float,
                          equity: float, short_term_liabilities: float, long_term_liabilities: float,
                          provisions: float, passive_accruals_deferrals: float, sales_revenue: float, cogs: float,
-                         other_operational_expense: float, depreciation: float, interest_expenses: float,
+                         changes_in_inventory: float, other_operational_expense: float, depreciation: float, personnel_expenses: float, selling_expenses: float, financial_expenses: float,
                          other_expenses: float, other_operational_income: float, other_income: float,
-                         interest_income: float, op_cash_flow: float) -> dict:
+                         financial_income: float, op_cash_flow: float) -> dict:
     
     non_current_assets = intangible_assets + property_plant_and_equipment + other_non_current_assets
     current_assets = inventories + trade_receivables + cash_and_cash_equivalents + other_current_assets
     total_assets = non_current_assets + current_assets + other_assets + active_accruals_deferrals
     total_liabilities = short_term_liabilities+long_term_liabilities
-    ebitda = sales_revenue - cogs - other_operational_expense  + other_operational_income 
-    ebit = ebitda - depreciation
-    net_income = ebit - interest_expenses + interest_income - other_expenses + other_income
+    if changes_in_inventory != 0:
+        sales_revenue = sales_revenue + changes_in_inventory
+        other_operational_expense = abs(other_operational_expense) + abs(selling_expenses) + abs(personnel_expenses)
+    ebitda = sales_revenue - cogs - abs(other_operational_expense)  + other_operational_income 
+    ebit = ebitda - abs(depreciation)
+    net_income = ebit - abs(financial_expenses) + financial_income - abs(other_expenses) + other_income
     equity_ratio = round(equity / total_assets, 4) if total_assets else 0 
     debt_ratio = round(total_liabilities / total_assets,4) if total_assets else 0
     equity_to_fixed_assets_ratio_I = round(equity / non_current_assets,4) if non_current_assets else 0
