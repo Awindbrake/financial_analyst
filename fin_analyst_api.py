@@ -57,7 +57,7 @@ def calculate_kpi(intangible_assets: float, property_plant_and_equipment: float,
     ebitda = sales_revenue - cogs - other_operational_expense  + other_operational_income 
     ebit = ebitda - depreciation
     net_income = ebit - interest_expenses + interest_income - other_expenses + other_income
-    equity_ratio = equity / total_assets if total_assets else 0
+    equity_ratio = f"{round(equity / total_assets, 2) if total_assets else 0 *100}%"
     debt_ratio = total_liabilities / total_assets if total_assets else 0
     equity_to_fixed_assets_ratio_I = equity / non_current_assets if non_current_assets else 0
     equity_to_fixed_assets_ratio_II = equity / (non_current_assets + long_term_liabilities) if (non_current_assets + long_term_liabilities) else 0
