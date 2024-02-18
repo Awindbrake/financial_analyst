@@ -57,10 +57,11 @@ def calculate_kpi(intangible_assets: float, property_plant_and_equipment: float,
     current_assets = inventories + trade_receivables + cash_and_cash_equivalents + other_current_assets
     total_assets = non_current_assets + current_assets + other_assets + active_accruals_deferrals
     total_liabilities = short_term_liabilities+long_term_liabilities
+    other_operational_expenses = other_operational_expense + abs(selling_expenses) + abs(personnel_expenses)
     if changes_in_inventory != 0:
-        ebitda = sales_revenue + changes_in_inventory - cogs - abs(other_operational_expense) - abs(selling_expenses) - abs(personnel_expenses)  + other_operational_income 
+        ebitda = sales_revenue + changes_in_inventory - cogs - abs(other_operational_expenses) + other_operational_income 
     else:
-        ebitda = sales_revenue - cogs - abs(other_operational_expense)  + other_operational_income 
+        ebitda = sales_revenue - cogs - abs(other_operational_expenses)  + other_operational_income 
     ebit = ebitda - abs(depreciation)
     net_income = ebit - abs(financial_expenses) + financial_income - abs(other_expenses) + other_income
     equity_ratio = round(equity / total_assets, 4) if total_assets else 0 
@@ -118,6 +119,7 @@ def calculate_kpi(intangible_assets: float, property_plant_and_equipment: float,
     "total liabilities": total_liabilities,
     "Sales revenue": sales_revenue,
     "cost of goods sold (COGS)": cogs,
+    "other operational expenses": other_operational_expenses,
     "EBITDA": {"value": ebitda, "explanation": ebitda_string},
     "depreciation and amortization": depreciation,
     "EBIT": {"value": ebit, "explanation": ebit_string},
