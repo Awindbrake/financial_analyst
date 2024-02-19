@@ -42,9 +42,107 @@ class YearlyFinancialData(BaseModel):
     financial_income: float = Field(0, description="Total interest income.")
     op_cash_flow: float = Field(0, description="Total operating cash flow.")
 
+    class Config:
+        schema_extra = {
+            "example": {
+                "intangible_assets": 0,
+                "property_plant_and_equipment": 0,
+                "other_non_current_assets": 0,
+                "inventories": 0,
+                "trade_receivables": 0,
+                "cash_and_cash_equivalents": 0,
+                "other_current_assets": 0,
+                "other_assets": 0,
+                "active_accruals_deferrals": 0,
+                "equity": 0,
+                "short_term_liabilities": 0,
+                "long_term_liabilities": 0,
+                "provisions": 0,
+                "passive_accruals_deferrals": 0,
+                "sales_revenue": 0,
+                "changes_in_inventories": 0,
+                "cogs": 0,
+                "other_operational_expense": 0,
+                "depreciation": 0,
+                "personnel_expenses": 0,
+                "selling_expenses": 0,
+                "financial_expenses": 0,
+                "other_expenses": 0,
+                "other_operational_income": 0,
+                "other_income": 0,
+                "financial_income": 0,
+                "op_cash_flow": 0
+            }
+        }
+
 class FinancialData(BaseModel):
     data: Dict[int, YearlyFinancialData] = Field({}, description="Financial data by year.")
 
+    class Config:
+        schema_extra = {
+            "example": {
+                "data": {
+                    "2020": {
+                        "intangible_assets": 0,
+                        "property_plant_and_equipment": 0,
+                        "other_non_current_assets": 0,
+                        "inventories": 0,
+                        "trade_receivables": 0,
+                        "cash_and_cash_equivalents": 0,
+                        "other_current_assets": 0,
+                        "other_assets": 0,
+                        "active_accruals_deferrals": 0,
+                        "equity": 0,
+                        "short_term_liabilities": 0,
+                        "long_term_liabilities": 0,
+                        "provisions": 0,
+                        "passive_accruals_deferrals": 0,
+                        "sales_revenue": 0,
+                        "changes_in_inventories": 0,
+                        "cogs": 0,
+                        "other_operational_expense": 0,
+                        "depreciation": 0,
+                        "personnel_expenses": 0,
+                        "selling_expenses": 0,
+                        "financial_expenses": 0,
+                        "other_expenses": 0,
+                        "other_operational_income": 0,
+                        "other_income": 0,
+                        "financial_income": 0,
+                        "op_cash_flow": 0
+                    },
+                    "2021": {
+                        "intangible_assets": 0,
+                        "property_plant_and_equipment": 0,
+                        "other_non_current_assets": 0,
+                        "inventories": 0,
+                        "trade_receivables": 0,
+                        "cash_and_cash_equivalents": 0,
+                        "other_current_assets": 0,
+                        "other_assets": 0,
+                        "active_accruals_deferrals": 0,
+                        "equity": 0,
+                        "short_term_liabilities": 0,
+                        "long_term_liabilities": 0,
+                        "provisions": 0,
+                        "passive_accruals_deferrals": 0,
+                        "sales_revenue": 0,
+                        "changes_in_inventories": 0,
+                        "cogs": 0,
+                        "other_operational_expense": 0,
+                        "depreciation": 0,
+                        "personnel_expenses": 0,
+                        "selling_expenses": 0,
+                        "financial_expenses": 0,
+                        "other_expenses": 0,
+                        "other_operational_income": 0,
+                        "other_income": 0,
+                        "financial_income": 0,
+                        "op_cash_flow": 0
+                    }
+                }
+            }
+        }
 
 # Adjust the calculate_kpi function to handle data for multiple years
 def calculate_kpi(data: Dict[int, YearlyFinancialData]) -> Dict[int, dict]:
