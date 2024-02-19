@@ -272,8 +272,8 @@ def calculate_kpi(data: Dict[int, YearlyFinancialData]) -> Dict[int, dict]:
 
 
 @app.post("/analyze")
-async def analyze_financials(data: FinancialData):
-    kpis = calculate_kpi(data.data)
+async def analyze_financials(financial_data: FinancialData):
+    kpis = calculate_kpi(financial_data.data)
     return {"kpis": kpis}
 
 
